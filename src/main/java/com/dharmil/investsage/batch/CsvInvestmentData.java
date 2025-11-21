@@ -1,21 +1,21 @@
 package com.dharmil.investsage.batch;
 
-// Represents a record read from the raw_investment_data table
-public class RawDataRecord {
-    private int id;
+public class CsvInvestmentData {
     private String instruction;
+    private String input;
     private String output;
-
-    // Default constructor (needed by some Spring Batch components)
-    public RawDataRecord() {}
+    private String text;
 
     // Getters and Setters
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
     public String getInstruction() { return instruction; }
     public void setInstruction(String instruction) { this.instruction = instruction; }
+
+    public String getInput() { return input; }
+    public void setInput(String input) { this.input = input; }
+
     public String getOutput() { return output; }
     public void setOutput(String output) { this.output = output; }
+
+    public String getText() { return text; }
+    public void setText(String text) { this.text = text; }
 }
-
-

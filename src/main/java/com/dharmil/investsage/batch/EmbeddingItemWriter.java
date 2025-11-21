@@ -104,20 +104,19 @@ public class EmbeddingItemWriter implements ItemWriter<List<ChunkInfo>> { // Wri
 
     // Helper method for DB batch writing
     private void writeBatchToDb(List<EmbeddingRecord> records) {
-        String sql = String.format(
-                "INSERT INTO %s (raw_data_id, chunk_index, chunk_text, embedding) VALUES (?, ?, ?, ?)",
-                NEW_EMBEDDING_TABLE
-        );
+    String sql = String.format(
+            "INSERT INTO %s (source_id, chunk_text, embedding) VALUES (?, ?, ?)",
+            NEW_EMBEDDING_TABLE
+    );
 
         log.debug("Writing batch of {} embedding records to DB.", records.size());
 
         try {
             jdbcTemplate.batchUpdate(sql, records, records.size(), // Use batch size = list size here
                     (PreparedStatement ps, EmbeddingRecord record) -> {
-                        ps.setInt(1, record.getRawDataId());
-                        ps.setInt(2, record.getChunkIndex());
-                        ps.setString(3, record.getChunkText());
-                        ps.setObject(4, new PGvector(record.getEmbedding())); // Create PGvector here
+                    ps.setInt(1, record.getRawDataId());           // source_id
+                    ps.setString(2, record.getChunkText());        // chunk_text
+                    ps.setObject(3, new PGvector(record.getEmbedding())); // embedding
                     });
             log.info("Successfully wrote batch of {} records to {}.", records.size(), NEW_EMBEDDING_TABLE);
         } catch (Exception e) {

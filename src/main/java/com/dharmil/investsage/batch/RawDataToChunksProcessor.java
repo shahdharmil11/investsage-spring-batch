@@ -27,10 +27,25 @@ public class RawDataToChunksProcessor implements ItemProcessor<RawDataRecord, Li
     @Nullable
     public List<ChunkInfo> process(@NonNull RawDataRecord item) throws Exception {
         List<ChunkInfo> chunkInfos = new ArrayList<>();
-        String rawText = item.getRawText();
         int rawId = item.getId();
+        
+        // Combine instruction and output to create the full text
+        StringBuilder fullTextBuilder = new StringBuilder();
+        
+        if (item.getInstruction() != null && !item.getInstruction().trim().isEmpty()) {
+            fullTextBuilder.append(item.getInstruction().trim());
+        }
+        
+        if (item.getOutput() != null && !item.getOutput().trim().isEmpty()) {
+            if (fullTextBuilder.length() > 0) {
+                fullTextBuilder.append(" ");
+            }
+            fullTextBuilder.append(item.getOutput().trim());
+        }
+        
+        String rawText = fullTextBuilder.toString();
 
-        if (rawText == null || rawText.trim().isEmpty()) {
+        if (rawText.isEmpty()) {
             log.warn("Skipping empty raw text for raw_id: {}", rawId);
             return null; // Skip this item entirely if text is empty
         }
