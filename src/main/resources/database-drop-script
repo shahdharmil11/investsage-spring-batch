@@ -1,0 +1,16 @@
+-- Complete reset and setup script for Render PostgreSQL
+-- Run this when you need a fresh database
+
+-- PART 1: DROP EVERYTHING
+DROP TABLE IF EXISTS new_investment_embeddings CASCADE;
+DROP TABLE IF EXISTS raw_investment_data CASCADE;
+DROP TABLE IF EXISTS batch_step_execution_context CASCADE;
+DROP TABLE IF EXISTS batch_job_execution_context CASCADE;
+DROP TABLE IF EXISTS batch_step_execution CASCADE;
+DROP TABLE IF EXISTS batch_job_execution_params CASCADE;
+DROP TABLE IF EXISTS batch_job_execution CASCADE;
+DROP TABLE IF EXISTS batch_job_instance CASCADE;
+DROP EXTENSION IF EXISTS vector CASCADE;
+
+-- PART 2: RECREATE
+-- [Copy the entire "Fresh Database Setup" section from Step 3 above]
