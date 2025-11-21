@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier; // Use if multiple Jobs exist
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -26,7 +27,8 @@ public class DataEmbeddingRunner implements CommandLineRunner {
 
     // Flag to control running the embedding job on startup
     // SET TO true TO RUN ONCE, THEN SET TO false
-    private final boolean runBatchEmbeddingJob = false;
+    @Value("${app.batch.run-embedding-job:false}")
+    private boolean runBatchEmbeddingJob;
 
     @Override
     public void run(String... args) throws Exception {
