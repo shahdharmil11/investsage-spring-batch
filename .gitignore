@@ -68,6 +68,7 @@ bin/
 # Application specific
 *.csv
 !**/src/test/**/*.csv
+!cleaned_data_for_investment_advice.csv
 
 # Environment variables
 .env
